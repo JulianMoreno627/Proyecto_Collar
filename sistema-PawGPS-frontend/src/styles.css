@@ -1,0 +1,59 @@
+/* Estilos globales mejorados visualmente */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(135deg, #1e1f26, #2c3e50); /* fondo oscuro moderno */
+  color: #e0f7fa; /* texto claro para buen contraste */
+}
+
+/* Clases utilitarias con mejor separación visual */
+.text-center {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Espaciado refinado con una paleta neutra oscura */
+.ml20 {
+  margin-left: 20px !important;
+}
+
+.mr20 {
+  margin-right: 20px !important;
+}
+
+.mt20 {
+  margin-top: 20px !important;
+}
+
+.mb20 {
+  margin-bottom: 20px !important;
+}
+
+.ml10 {
+  margin-left: 10px !important;
+}
+
+.mr10 {
+  margin-right: 10px !important;
+}
+
+.mt10 {
+  margin-top: 10px !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.ml70 {
+  margin-left: 70px !important;
+}
+
