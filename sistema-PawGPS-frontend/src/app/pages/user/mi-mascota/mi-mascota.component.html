@@ -1,0 +1,63 @@
+<div class="registration-container">
+  <div class="registration-card">
+    <!-- Área circular para la foto -->
+    <div class="photo-container" (click)="triggerFileInput()">
+      <div class="photo-preview" [ngStyle]="{'background-image': 'url(' + (previewUrl || 'assets/default-pet.png') + ')'}">
+        <div class="photo-overlay" *ngIf="!previewUrl">
+          <i class="fas fa-plus"></i>
+          <span>Agregar foto</span>
+        </div>
+      </div>
+      <input #fileInput type="file" id="petPhoto" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+    </div>
+
+    <h2 class="title">Registrar Mi Mascota</h2>
+
+    <form [formGroup]="petForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-group">
+        <label for="name">Nombre de la mascota</label>
+        <input id="name" type="text" formControlName="name" placeholder="Ej: Luna">
+      </div>
+
+      <div class="form-group">
+        <label for="breed">Raza</label>
+        <input id="breed" type="text" formControlName="breed" placeholder="Ej: Golden Retriever">
+      </div>
+
+      <div class="form-group">
+        <label for="birthDate">Fecha de nacimiento</label>
+        <input id="birthDate" type="date" formControlName="birthDate">
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input id="color" type="text" formControlName="color" placeholder="Ej: Dorado">
+      </div>
+
+      <div class="form-group">
+        <label for="weight">Peso (kg)</label>
+        <input id="weight" type="number" step="0.1" formControlName="weight" placeholder="Ej: 25.5">
+      </div>
+
+      <div class="form-group">
+        <label>Género</label>
+        <div class="gender-options">
+          <label class="gender-option">
+            <input type="radio" formControlName="gender" value="Macho">
+            <span class="radio-button"></span>
+            Macho
+          </label>
+          <label class="gender-option">
+            <input type="radio" formControlName="gender" value="Hembra">
+            <span class="radio-button"></span>
+            Hembra
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="!petForm.valid || !previewUrl">
+        <i class="fas fa-paw"></i> Registrar Mascota
+      </button>
+    </form>
+  </div>
+</div>

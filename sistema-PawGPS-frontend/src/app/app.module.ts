@@ -22,6 +22,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { authInterceptorProviders } from './services/auth.interceptor';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
+import { CarritoComponent } from './pages/user/carrito/carrito.component';
+import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
+import { ProductosComponent } from './pages/user/productos/productos.component';
+import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
+import { ReactiveFormsModule } from '@angular/forms'; 
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -31,7 +40,11 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
     LoginComponent,
     HomeComponent,
     DashboardComponent,
-    UserDashboardComponent
+    UserDashboardComponent,
+    CarritoComponent,
+    MiMascotaComponent,
+    ProductosComponent,
+    RastreoComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +58,8 @@ import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboa
     MatSnackBarModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

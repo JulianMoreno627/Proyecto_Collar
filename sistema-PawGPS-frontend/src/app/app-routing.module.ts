@@ -7,6 +7,10 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProductosComponent } from './pages/user/productos/productos.component';
+import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
+import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
+import { CarritoComponent } from './pages/user/carrito/carrito.component';
 
 const routes: Routes = [
   {
@@ -35,6 +39,30 @@ const routes: Routes = [
     component:UserDashboardComponent,
     pathMatch:'full',
     canActivate:[NormalGuard]
+  },
+  {
+    path: 'productos',
+    component: ProductosComponent,
+    pathMatch: 'full',
+    canActivate: [NormalGuard]
+  },
+  {
+    path: 'mi-mascota',
+    component: MiMascotaComponent,
+    pathMatch: 'full',
+    canActivate: [NormalGuard]
+  },
+  {
+    path: 'rastreo',
+    component: RastreoComponent,
+    pathMatch: 'full',
+    canActivate: [NormalGuard]
+  },
+  {
+    path: 'carrito',
+    component: CarritoComponent,
+    pathMatch: 'full',
+    canActivate: [NormalGuard]
   }
 ];
 

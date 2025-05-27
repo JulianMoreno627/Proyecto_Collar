@@ -18,7 +18,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -27,7 +26,6 @@ public class UsuarioController {
         usuario.setPerfil("default.png");
 
         usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
-
         Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
         Rol rol = new Rol();
@@ -54,3 +52,4 @@ public class UsuarioController {
     }
 
 }
+
