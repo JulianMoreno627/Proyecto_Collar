@@ -1,57 +1,83 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import baserUrl from '../services/helper';  // Ajusta la ruta según la ubicación de tu archivo
+import baserUrl from '../services/helper';
+
+interface Usuario {
+  id: number;
+  email: string;
+  nombre: string;
+  rol: string;
+  token?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = `${baserUrl}/auth`;
-  private currentUsuarioSubject: BehaviorSubject<any>;
-  public currentUsuario: Observable<any>;
+  private currentUsuarioSubject: BehaviorSubject<Usuario | null>;
+  public currentUsuario: Observable<Usuario | null>;
 
   constructor(private http: HttpClient, private router: Router) {
-    const storedUsuario = localStorage.getItem('currentUsuario');
-    this.currentUsuarioSubject = new BehaviorSubject<any>(
-      storedUsuario ? JSON.parse(storedUsuario) : null
-    );
+    const storedUsuario = this.getStoredUsuario();
+    this.currentUsuarioSubject = new BehaviorSubject<Usuario | null>(storedUsuario);
     this.currentUsuario = this.currentUsuarioSubject.asObservable();
   }
 
-  public get currentUsuarioValue(): any {
+  private getStoredUsuario(): Usuario | null {
+    try {
+      const usuarioStr = localStorage.getItem('currentUsuario');
+      return usuarioStr ? JSON.parse(usuarioStr) : null;
+    } catch (error) {
+      console.error('Error parsing stored user', error);
+      this.clearStorage();
+      return null;
+    }
+  }
+
+  public get currentUsuarioValue(): Usuario | null {
     return this.currentUsuarioSubject.value;
   }
 
   public getCurrentUsuarioId(): number | null {
-    return this.currentUsuarioValue?.id || null;
+    return this.currentUsuarioValue?.id ?? null;
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+  login(email: string, password: string): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap(usuario => {
-          localStorage.setItem('currentUsuario', JSON.stringify(usuario));
+          this.storeUsuario(usuario);
           this.currentUsuarioSubject.next(usuario);
-          return usuario;
+        }),
+        catchError(error => {
+          console.error('Login error', error);
+          return throwError(() => new Error('Credenciales incorrectas'));
         })
       );
   }
 
-  register(usuarioData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, usuarioData);
+  register(usuarioData: any): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/register`, usuarioData)
+      .pipe(
+        catchError(error => {
+          console.error('Registration error', error);
+          return throwError(() => new Error('Error en el registro'));
+        })
+      );
   }
 
   logout(): void {
-    localStorage.removeItem('currentUsuario');
+    this.clearStorage();
     this.currentUsuarioSubject.next(null);
     this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
-    return !!this.currentUsuarioValue;
+    return !!this.currentUsuarioValue?.token;
   }
 
   isAdmin(): boolean {
@@ -59,6 +85,22 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this.currentUsuarioValue?.token || null;
+    return this.currentUsuarioValue?.token ?? null;
+  }
+
+  private storeUsuario(usuario: Usuario): void {
+    try {
+      localStorage.setItem('currentUsuario', JSON.stringify(usuario));
+    } catch (error) {
+      console.error('Error storing user', error);
+    }
+  }
+
+  private clearStorage(): void {
+    try {
+      localStorage.removeItem('currentUsuario');
+    } catch (error) {
+      console.error('Error clearing storage', error);
+    }
   }
 }

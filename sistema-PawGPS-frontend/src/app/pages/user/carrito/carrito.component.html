@@ -1,1 +1,78 @@
-<p>carrito works!</p>
+<!-- src/app/productos/components/carrito/carrito.component.html -->
+<div class="cart-container">
+  <div class="cart-header">
+    <i class="fas fa-shopping-cart cart-icon"></i>
+    <h1 class="cart-title">Tu Carrito de Compras</h1>
+  </div>
+  
+  <div *ngIf="items.length === 0" class="empty-cart-message">
+    <i class="fas fa-shopping-basket empty-cart-icon"></i>
+    <p class="empty-cart-text">Tu carrito está vacío</p>
+    <a routerLink="/productos" class="explore-link">Explorar productos</a>
+  </div>
+  
+  <div *ngIf="items.length > 0">
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="product-row" *ngFor="let item of items">
+          <td>
+            <div class="product-info">
+              <img [src]="item.producto.imagenUrl" class="product-image" alt="{{item.producto.nombre}}">
+              <div>
+                <h3 class="product-name">{{item.producto.nombre}}</h3>
+                <p class="product-price">${{item.producto.precio | number}}</p>
+              </div>
+            </div>
+          </td>
+          <td class="product-price">${{item.producto.precio | number}}</td>
+          <td>
+            <div class="quantity-control">
+              <input type="number" class="quantity-input" 
+                     [(ngModel)]="item.cantidad" 
+                     (change)="actualizarCantidad(item, item.cantidad)"
+                     min="1" [max]="item.producto.stock">
+            </div>
+          </td>
+          <td class="product-price">${{(item.producto.precio * item.cantidad) | number}}</td>
+          <td>
+            <button class="delete-btn" (click)="eliminarItem(item.producto.id)">
+              <i class="fas fa-trash delete-icon"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="order-summary">
+      <h3 class="summary-title">Resumen del Pedido</h3>
+      
+      <div class="summary-row">
+        <span>Subtotal:</span>
+        <span>${{total | number}}</span>
+      </div>
+      
+      <div class="summary-row">
+        <span>Envío:</span>
+        <span>Gratis</span>
+      </div>
+      
+      <div class="summary-row summary-total">
+        <span>Total:</span>
+        <span>${{total | number}}</span>
+      </div>
+      
+      <button class="checkout-btn" (click)="procederAlPago()">
+        <i class="fas fa-credit-card"></i> Proceder al pago
+      </button>
+    </div>
+  </div>
+</div>

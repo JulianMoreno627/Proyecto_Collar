@@ -1,63 +1,76 @@
-<div class="registration-container">
-  <div class="registration-card">
-    <!-- Área circular para la foto -->
-    <div class="photo-container" (click)="triggerFileInput()">
-      <div class="photo-preview" [ngStyle]="{'background-image': 'url(' + (previewUrl || 'assets/default-pet.png') + ')'}">
-        <div class="photo-overlay" *ngIf="!previewUrl">
-          <i class="fas fa-plus"></i>
-          <span>Agregar foto</span>
+<div class="pet-registration-container">
+  <div class="pet-registration-card">
+    <h2 class="pet-registration-title">Registrar Nueva Mascota</h2>
+    
+    <!-- Área de subida de foto -->
+    <div class="pet-photo-upload">
+      <label class="upload-label">
+        <div class="photo-preview">
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Foto de mascota" class="pet-photo">
+          <div *ngIf="!previewUrl" class="upload-icon">
+            <i class="fas fa-camera"></i>
+            <span>Haz clic para subir foto</span>
+          </div>
         </div>
-      </div>
-      <input #fileInput type="file" id="petPhoto" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+      </label>
+      <p class="upload-hint">Suba una foto de su mascota (opcional)</p>
     </div>
 
-    <h2 class="title">Registrar Mi Mascota</h2>
-
-    <form [formGroup]="petForm" (ngSubmit)="onSubmit()" class="form">
-      <div class="form-group">
-        <label for="name">Nombre de la mascota</label>
-        <input id="name" type="text" formControlName="name" placeholder="Ej: Luna">
-      </div>
-
-      <div class="form-group">
-        <label for="breed">Raza</label>
-        <input id="breed" type="text" formControlName="breed" placeholder="Ej: Golden Retriever">
-      </div>
-
-      <div class="form-group">
-        <label for="birthDate">Fecha de nacimiento</label>
-        <input id="birthDate" type="date" formControlName="birthDate">
-      </div>
-
-      <div class="form-group">
-        <label for="color">Color</label>
-        <input id="color" type="text" formControlName="color" placeholder="Ej: Dorado">
-      </div>
-
-      <div class="form-group">
-        <label for="weight">Peso (kg)</label>
-        <input id="weight" type="number" step="0.1" formControlName="weight" placeholder="Ej: 25.5">
-      </div>
-
-      <div class="form-group">
-        <label>Género</label>
-        <div class="gender-options">
-          <label class="gender-option">
-            <input type="radio" formControlName="gender" value="Macho">
-            <span class="radio-button"></span>
-            Macho
-          </label>
-          <label class="gender-option">
-            <input type="radio" formControlName="gender" value="Hembra">
-            <span class="radio-button"></span>
-            Hembra
-          </label>
+    <!-- Formulario -->
+    <form [formGroup]="mascotaForm" (ngSubmit)="onSubmit()" class="pet-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" formControlName="nombre" placeholder="Ej: Max" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="especie">Especie</label>
+          <select id="especie" formControlName="especie" required>
+            <option value="" disabled selected>Seleccione...</option>
+            <option value="Perro">Perro</option>
+            <option value="Gato">Gato</option>
+            <option value="Ave">Ave</option>
+            <option value="Roedor">Roedor</option>
+            <option value="Otro">Otro</option>
+          </select>
         </div>
       </div>
 
-      <button type="submit" class="submit-btn" [disabled]="!petForm.valid || !previewUrl">
-        <i class="fas fa-paw"></i> Registrar Mascota
-      </button>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="raza">Raza</label>
+          <input type="text" id="raza" formControlName="raza" placeholder="Ej: Labrador">
+        </div>
+        
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de Nacimiento</label>
+          <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="color">Color</label>
+          <input type="text" id="color" formControlName="color" placeholder="Ej: Café con blanco">
+        </div>
+        
+        <div class="form-group">
+          <label for="sexo">Sexo</label>
+          <select id="sexo" formControlName="sexo" required>
+            <option value="" disabled selected>Seleccione...</option>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-button" [disabled]="!mascotaForm.valid">
+          Registrar Mascota
+        </button>
+      </div>
     </form>
   </div>
 </div>

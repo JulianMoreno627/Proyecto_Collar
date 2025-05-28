@@ -31,7 +31,7 @@ export class UserDashboardComponent implements OnInit {
         id: 2,
         name: 'Comedero automático',
         description: 'Programa las comidas de tu mascota',
-        image: 'https://via.placeholder.com/300x200?text=Comedero+Automático'
+        image: 'https://s.libertaddigital.com/2021/12/24/comedero-automatico-para-perros-y-gatos-honeyguaridan-7l.jpg'
       },
       {
         id: 3,

@@ -26,7 +26,13 @@ import { CarritoComponent } from './pages/user/carrito/carrito.component';
 import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
 import { ProductosComponent } from './pages/user/productos/productos.component';
 import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { AdminMascotasComponent } from './pages/admin/admin-mascotas/admin-mascotas.component';
+import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
+import { AdminPetsComponent } from './pages/admin/admin-pets/admin-pets.component';
+import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
+import { AdminDevicesComponent } from './pages/admin/admin-devices/admin-devices.component';
+import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 
 
 
@@ -45,6 +51,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MiMascotaComponent,
     ProductosComponent,
     RastreoComponent,
+    AdminMascotasComponent,
+    AdminUsersComponent,
+    AdminPetsComponent,
+    AdminProductsComponent,
+    AdminDevicesComponent,
+    AdminOrdersComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MiMascotaComponent } from './mi-mascota.component';
 
 describe('MiMascotaComponent', () => {
@@ -8,10 +7,11 @@ describe('MiMascotaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MiMascotaComponent ]
-    })
-    .compileComponents();
+      declarations: [MiMascotaComponent]
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(MiMascotaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -21,3 +21,4 @@ describe('MiMascotaComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

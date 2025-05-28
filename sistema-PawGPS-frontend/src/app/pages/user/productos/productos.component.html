@@ -1,1 +1,23 @@
-<p>productos works!</p>
+<!-- src/app/productos/components/lista-productos/lista-productos.component.html -->
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Nuestros Productos</h2>
+  
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let producto of productos">
+      <div class="card h-100 product-card" (click)="verDetalle(producto.id)">
+        <img [src]="producto.imagenUrl" class="card-img-top product-image" alt="{{producto.nombre}}">
+        <div class="card-body">
+          <h5 class="card-title">{{producto.nombre}}</h5>
+          <p class="card-text text-muted">{{producto.descripcion | truncate:100}}</p>
+          <p class="card-text font-weight-bold text-primary">${{producto.precio | number}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

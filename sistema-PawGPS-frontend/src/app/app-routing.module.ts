@@ -11,59 +11,70 @@ import { ProductosComponent } from './pages/user/productos/productos.component';
 import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
 import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
 import { CarritoComponent } from './pages/user/carrito/carrito.component';
+import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
+import { AdminPetsComponent } from './pages/admin/admin-pets/admin-pets.component';
+import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
+import { AdminDevicesComponent } from './pages/admin/admin-devices/admin-devices.component';
+import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 
 const routes: Routes = [
   {
-    path : '',
-    component : HomeComponent,
-    pathMatch : 'full'
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full'
   },
   {
-    path : 'signup',
-    component : SignupComponent,
-    pathMatch : 'full'
+    path: 'signup',
+    component: SignupComponent,
+    pathMatch: 'full'
   },
   {
-    path : 'login',
-    component : LoginComponent,
-    pathMatch : 'full'
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: 'full'
   },
-  {
-    path:'admin',
-    component:DashboardComponent,
-    pathMatch:'full',
-    canActivate:[AdminGuard]
-  },
-  {
-    path:'user-dashboard',
-    component:UserDashboardComponent,
-    pathMatch:'full',
-    canActivate:[NormalGuard]
+   {
+    path: 'user-dashboard',
+    component: UserDashboardComponent,
+    canActivate: [NormalGuard]
   },
   {
     path: 'productos',
     component: ProductosComponent,
-    pathMatch: 'full',
     canActivate: [NormalGuard]
   },
   {
     path: 'mi-mascota',
     component: MiMascotaComponent,
-    pathMatch: 'full',
     canActivate: [NormalGuard]
   },
   {
     path: 'rastreo',
     component: RastreoComponent,
-    pathMatch: 'full',
     canActivate: [NormalGuard]
   },
   {
     path: 'carrito',
     component: CarritoComponent,
-    pathMatch: 'full',
     canActivate: [NormalGuard]
-  }
+  },
+  {
+    path: 'admin',
+    component: DashboardComponent,
+    canActivate: [AdminGuard],
+      children:[
+      {
+        path: 'users',
+        component: AdminUsersComponent,
+      },
+      {
+        path:'devices',
+        component: AdminDevicesComponent,
+      }
+    ]
+
+  },
+ 
 ];
 
 @NgModule({
@@ -71,3 +82,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
