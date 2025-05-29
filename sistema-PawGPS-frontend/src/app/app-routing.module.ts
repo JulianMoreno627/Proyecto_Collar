@@ -70,6 +70,10 @@ const routes: Routes = [
       {
         path:'devices',
         component: AdminDevicesComponent,
+      },
+      {
+        path:'pets',
+        component: AdminPetsComponent ,
       }
     ]
 

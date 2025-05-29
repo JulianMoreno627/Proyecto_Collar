@@ -6,6 +6,7 @@ import java.util.Date;
 @Entity
 @Table(name = "mascotas")
 public class Mascota {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +25,10 @@ public class Mascota {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    // Constructor vacío necesario para Jackson
+    public Mascota() {
+    }
 
     // Getters y Setters
     public Long getId() {

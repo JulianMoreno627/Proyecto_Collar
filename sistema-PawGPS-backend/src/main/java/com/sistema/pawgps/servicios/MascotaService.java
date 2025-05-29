@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MascotaService {
@@ -36,12 +37,40 @@ public class MascotaService {
         return mascotaRepository.save(mascota);
     }
 
+    public Mascota actualizarMascota(Long id, Mascota mascota, MultipartFile foto) throws IOException {
+        Mascota mascotaExistente = obtenerMascotaPorId(id);
+
+        mascotaExistente.setNombre(mascota.getNombre());
+        mascotaExistente.setEspecie(mascota.getEspecie());
+        mascotaExistente.setRaza(mascota.getRaza());
+        mascotaExistente.setFechaNacimiento(mascota.getFechaNacimiento());
+        mascotaExistente.setColor(mascota.getColor());
+        mascotaExistente.setSexo(mascota.getSexo());
+        mascotaExistente.setObservaciones(mascota.getObservaciones());
+
+        if (foto != null && !foto.isEmpty()) {
+            String fotoUrl = guardarFoto(foto);
+            mascotaExistente.setFotoUrl(fotoUrl);
+        }
+
+        return mascotaRepository.save(mascotaExistente);
+    }
+
     public List<Mascota> obtenerTodasMascotas() {
         return mascotaRepository.findAll();
     }
 
     public long contarMascotas() {
         return mascotaRepository.count();
+    }
+
+    public Mascota obtenerMascotaPorId(Long id) {
+        return mascotaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Mascota no encontrada"));
+    }
+
+    public void eliminarMascota(Long id) {
+        mascotaRepository.deleteById(id);
     }
 
     private String guardarFoto(MultipartFile foto) throws IOException {

@@ -1,1 +1,135 @@
-<p>admin-pets works!</p>
+<div class="admin-pets-container">
+  <!-- Header -->
+  <div class="admin-header">
+    <h1 class="admin-title">
+      <i class="fas fa-paw"></i> Administración de Mascotas
+    </h1>
+    <p class="admin-subtitle">Gestión centralizada de todas las mascotas registradas</p>
+  </div>
+
+  <!-- Mensajes de error -->
+  <div *ngIf="errorMessage" class="error-alert">
+    <div class="alert-content">
+      <i class="fas fa-exclamation-circle"></i>
+      <div>
+        <h4>Error</h4>
+        <p>{{errorMessage}}</p>
+      </div>
+    </div>
+    <button class="refresh-btn" (click)="refrescar()">
+      <i class="fas fa-sync-alt"></i> Reintentar
+    </button>
+  </div>
+  
+  <!-- Spinner de carga -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner">
+      <div class="spinner-circle"></div>
+    </div>
+    <p>Cargando datos de mascotas...</p>
+  </div>
+  
+  <!-- Contenido principal -->
+  <div *ngIf="!isLoading">
+    <!-- Resumen -->
+    <div class="summary-card">
+      <div class="summary-header">
+        <h2><i class="fas fa-chart-pie"></i> Resumen General</h2>
+        <button class="refresh-btn small" (click)="refrescar()">
+          <i class="fas fa-sync-alt"></i> Actualizar
+        </button>
+      </div>
+      <div class="summary-body">
+        <div class="summary-item">
+          <div class="summary-icon total">
+            <i class="fas fa-paw"></i>
+          </div>
+          <div>
+            <h3>Total Registradas</h3>
+            <p>{{totalMascotas}} <span>mascotas</span></p>
+          </div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-icon shown">
+            <i class="fas fa-list"></i>
+          </div>
+          <div>
+            <h3>Mostradas</h3>
+            <p>{{mascotas.length}} <span>mascotas</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Listado de mascotas -->
+    <div class="pets-list-card">
+      <div class="list-header">
+        <h2><i class="fas fa-list-ul"></i> Listado Completo</h2>
+        <div class="actions">
+          <button class="refresh-btn small" (click)="refrescar()">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div *ngIf="mascotas.length === 0" class="empty-state">
+        <i class="fas fa-search"></i>
+        <h3>No se encontraron mascotas registradas</h3>
+        <p>Actualmente no hay mascotas en el sistema.</p>
+      </div>
+      
+      <div *ngIf="mascotas.length > 0" class="pets-table-container">
+        <table class="pets-table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-image"></i> Foto</th>
+              <th><i class="fas fa-signature"></i> Nombre</th>
+              <th><i class="fas fa-dog"></i> Especie</th>
+              <th><i class="fas fa-dna"></i> Raza</th>
+              <th><i class="fas fa-user"></i> Dueño</th>
+              <th><i class="fas fa-cog"></i> Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mascota of mascotas">
+              <td>
+                <div class="pet-photo">
+                  <img *ngIf="mascota.fotoUrl" [src]="mascota.fotoUrl" alt="{{mascota.nombre}}">
+                  <div *ngIf="!mascota.fotoUrl" class="no-photo">
+                    <i class="fas fa-paw"></i>
+                  </div>
+                </div>
+              </td>
+              <td>{{mascota.nombre}}</td>
+              <td>
+                <span class="species-badge" [ngClass]="{'dog': mascota.especie === 'Perro', 'cat': mascota.especie === 'Gato', 'other': mascota.especie !== 'Perro' && mascota.especie !== 'Gato'}">
+                  {{mascota.especie}}
+                </span>
+              </td>
+              <td>{{mascota.raza || '--'}}</td>
+              <td>
+                <div class="owner-info">
+                  <i class="fas fa-user-circle"></i>
+                  <span>{{mascota.usuario?.nombre || '--'}}</span>
+                </div>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <button class="view-btn" title="Ver detalles">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="edit-btn" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="delete-btn" title="Eliminar">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

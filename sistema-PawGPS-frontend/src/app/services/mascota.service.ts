@@ -6,27 +6,35 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MascotaService {
-  private apiUrl = 'http://tu-backend.com/api/mascotas';
+  private baseUrl = 'http://localhost:8081/api/mascotas';
 
   constructor(private http: HttpClient) { }
 
   obtenerMisMascotas(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/mis-mascotas`);
+    return this.http.get(`${this.baseUrl}/mis-mascotas`);
   }
 
   obtenerTodasMascotas(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/admin/todas`);
+    return this.http.get(`${this.baseUrl}/admin/todas`);
   }
 
   contarMascotas(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/admin/cantidad`);
+    return this.http.get<number>(`${this.baseUrl}/admin/cantidad`);
   }
 
   registrarMascota(formData: FormData): Observable<any> {
-    return this.http.post(this.apiUrl, formData);
+    return this.http.post(this.baseUrl, formData);
+  }
+
+  actualizarMascota(id: number, formData: FormData): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, formData);
   }
 
   eliminarMascota(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  obtenerMascota(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 }

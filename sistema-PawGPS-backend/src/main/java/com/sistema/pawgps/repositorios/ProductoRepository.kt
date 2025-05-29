@@ -1,4 +1,3 @@
-// src/main/java/com/sistema/pawgps/repositorio/ProductoRepository.java
 package com.sistema.pawgps.repositorio
 
 import com.sistema.pawgps.modelo.Producto

@@ -1,4 +1,3 @@
-// src/main/java/com/sistema/pawgps/servicios/ProductoService.java
 package com.sistema.pawgps.servicios;
 
 import com.sistema.pawgps.modelo.Producto;

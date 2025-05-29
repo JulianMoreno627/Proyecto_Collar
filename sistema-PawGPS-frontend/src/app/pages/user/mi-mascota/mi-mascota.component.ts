@@ -1,8 +1,7 @@
-// src/app/components/mi-mascota/mi-mascota.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MascotaService } from 'src/app/services/mascota.service';
-import { AuthService } from '../../../services/auth.servece';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,6 +14,7 @@ export class MiMascotaComponent implements OnInit {
   mascotas: any[] = [];
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
+  editingMascota: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -25,7 +25,7 @@ export class MiMascotaComponent implements OnInit {
     this.mascotaForm = this.fb.group({
       nombre: ['', Validators.required],
       especie: ['', Validators.required],
-      raza: ['', Validators.required],
+      raza: [''],
       fechaNacimiento: ['', Validators.required],
       color: ['', Validators.required],
       sexo: ['', Validators.required],
@@ -35,23 +35,6 @@ export class MiMascotaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMascotas();
-  }
-
-  // Función para calcular la edad
-  calcularEdad(fechaNacimiento: string): number {
-    if (!fechaNacimiento) return 0;
-    
-    const fechaNac = new Date(fechaNacimiento);
-    const hoy = new Date();
-    
-    let edad = hoy.getFullYear() - fechaNac.getFullYear();
-    const mes = hoy.getMonth() - fechaNac.getMonth();
-    
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
-      edad--;
-    }
-    
-    return edad;
   }
 
   cargarMascotas(): void {
@@ -70,7 +53,6 @@ export class MiMascotaComponent implements OnInit {
     if (file) {
       this.selectedFile = file;
       
-      // Mostrar vista previa
       const reader = new FileReader();
       reader.onload = () => {
         this.previewUrl = reader.result;
@@ -82,28 +64,60 @@ export class MiMascotaComponent implements OnInit {
   onSubmit(): void {
     if (this.mascotaForm.valid) {
       const formData = new FormData();
-      formData.append('mascota', new Blob([JSON.stringify(this.mascotaForm.value)], {
-        type: 'application/json'
-      }));
+      const mascotaData = this.mascotaForm.value;
       
+      // Añadir mascota como JSON string en formData
+      formData.append('mascota', JSON.stringify(mascotaData));
+      
+      // Adjuntar la foto si hay
       if (this.selectedFile) {
         formData.append('foto', this.selectedFile);
       }
 
-      this.mascotaService.registrarMascota(formData).subscribe(
-        (response: any) => {
-          alert('Mascota registrada con éxito');
-          this.mascotaForm.reset();
-          this.previewUrl = null;
-          this.selectedFile = null;
-          this.cargarMascotas();
-        },
-        error => {
-          console.error('Error al registrar mascota:', error);
-          alert('Error al registrar mascota');
-        }
-      );
+      if (this.editingMascota) {
+        // Editar mascota existente
+        this.mascotaService.actualizarMascota(this.editingMascota.id, formData).subscribe(
+          (response: any) => {
+            alert('Mascota actualizada con éxito');
+            this.resetForm();
+            this.cargarMascotas();
+          },
+          error => {
+            console.error('Error al actualizar mascota:', error);
+            alert('Error al actualizar mascota');
+          }
+        );
+      } else {
+        // Crear nueva mascota
+        this.mascotaService.registrarMascota(formData).subscribe(
+          (response: any) => {
+            alert('Mascota registrada con éxito');
+            this.resetForm();
+            this.cargarMascotas();
+          },
+          error => {
+            console.error('Error al registrar mascota:', error);
+            alert('Error al registrar mascota');
+          }
+        );
+      }
     }
+  }
+
+  editarMascota(mascota: any): void {
+    this.editingMascota = mascota;
+    this.mascotaForm.patchValue({
+      nombre: mascota.nombre,
+      especie: mascota.especie,
+      raza: mascota.raza,
+      fechaNacimiento: mascota.fechaNacimiento ? mascota.fechaNacimiento.split('T')[0] : '', // formato yyyy-MM-dd
+      color: mascota.color,
+      sexo: mascota.sexo,
+      observaciones: mascota.observaciones
+    });
+    this.previewUrl = mascota.fotoUrl || null;
+    this.selectedFile = null; // reset selected file al editar
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   eliminarMascota(id: number): void {
@@ -119,5 +133,16 @@ export class MiMascotaComponent implements OnInit {
         }
       );
     }
+  }
+
+  cancelarEdicion(): void {
+    this.resetForm();
+  }
+
+  resetForm(): void {
+    this.mascotaForm.reset();
+    this.previewUrl = null;
+    this.selectedFile = null;
+    this.editingMascota = null;
   }
 }

@@ -1,0 +1,388 @@
+/* Estilos generales */
+.admin-pets-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.admin-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-title {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.admin-title i {
+  color: #3b82f6;
+}
+
+.admin-subtitle {
+  color: #64748b;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Alertas y carga */
+.error-alert {
+  background-color: #fee2e2;
+  border-left: 4px solid #ef4444;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.alert-content i {
+  color: #ef4444;
+  font-size: 1.5rem;
+  margin-top: 0.2rem;
+}
+
+.alert-content h4 {
+  margin: 0 0 0.3rem 0;
+  color: #b91c1c;
+}
+
+.alert-content p {
+  margin: 0;
+  color: #7f1d1d;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.spinner-circle {
+  border: 5px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Tarjetas */
+.summary-card, .pets-list-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.summary-header, .list-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-header h2, .list-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.summary-body {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.summary-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f8fafc;
+}
+
+.summary-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.summary-icon.total {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.summary-icon.shown {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.summary-item h3 {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.summary-item p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.summary-item p span {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: normal;
+}
+
+/* Tabla */
+.pets-table-container {
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+.pets-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.pets-table th {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pets-table th i {
+  margin-right: 0.5rem;
+}
+
+.pets-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.pets-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Elementos de la tabla */
+.pet-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pet-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-photo i {
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+.species-badge {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.species-badge.dog {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.species-badge.cat {
+  background-color: #fce7f3;
+  color: #9d174d;
+}
+
+.species-badge.other {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.owner-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.owner-info i {
+  color: #64748b;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-buttons button {
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-btn {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.view-btn:hover {
+  background-color: #bae6fd;
+}
+
+.edit-btn {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.edit-btn:hover {
+  background-color: #fde68a;
+}
+
+.delete-btn {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.delete-btn:hover {
+  background-color: #fecaca;
+}
+
+/* Estado vacío */
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin: 0.5rem 0;
+  color: #475569;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+/* Botones */
+.refresh-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refresh-btn:hover {
+  background-color: #2563eb;
+}
+
+.refresh-btn.small {
+  padding: 0.5rem;
+  background-color: transparent;
+  color: #64748b;
+}
+
+.refresh-btn.small:hover {
+  background-color: #f1f5f9;
+  color: #3b82f6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-pets-container {
+    padding: 1rem;
+  }
+  
+  .summary-body {
+    flex-direction: column;
+  }
+  
+  .pets-table th, .pets-table td {
+    padding: 0.8rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons button {
+    width: 100%;
+  }
+}
