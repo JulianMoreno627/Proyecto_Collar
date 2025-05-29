@@ -32,6 +32,7 @@ import { AdminPetsComponent } from './pages/admin/admin-pets/admin-pets.componen
 import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
 import { AdminDevicesComponent } from './pages/admin/admin-devices/admin-devices.component';
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
+import { MisMascotasComponent } from './pages/user/mis-mascotas/mis-mascotas.component';
 
 
 
@@ -55,6 +56,7 @@ import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.co
     AdminProductsComponent,
     AdminDevicesComponent,
     AdminOrdersComponent,
+    MisMascotasComponent,
   ],
   imports: [
     BrowserModule,
