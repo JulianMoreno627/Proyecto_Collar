@@ -1,4 +1,5 @@
 /* Estilos globales mejorados visualmente */
+@import "~leaflet/dist/leaflet.css";
 
 html, body {
   height: 100%;

@@ -42,6 +42,7 @@ export class AuthService {
     return this.currentUsuarioSubject.value;
   }
 
+  // Método corregido para obtener el id del usuario actual
   public getCurrentUsuarioId(): number | null {
     return this.currentUsuarioValue?.id ?? null;
   }

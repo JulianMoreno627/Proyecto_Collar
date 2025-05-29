@@ -61,8 +61,165 @@
       </div>
     </div>
     
+    <!-- Formulario de edición -->
+    <div *ngIf="editingMascota" class="pets-list-card">
+      <div class="list-header">
+        <h2><i class="fas fa-edit"></i> Editando a {{editingMascota.nombre}}</h2>
+        <button class="refresh-btn small" (click)="cancelarEdicion()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="pet-photo-upload">
+              <label class="upload-label">
+                <div class="photo-preview">
+                  <img *ngIf="previewUrl" [src]="previewUrl" alt="Foto de mascota" class="pet-photo">
+                  <div *ngIf="!previewUrl" class="upload-icon">
+                    <i class="fas fa-camera"></i>
+                    <span>Cambiar foto</span>
+                  </div>
+                </div>
+                <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+              </label>
+              <p class="upload-hint">Cambia la foto de tu mascota (opcional)</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <form [formGroup]="mascotaForm" (ngSubmit)="actualizarMascota()">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" id="nombre" formControlName="nombre" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="especie">Especie</label>
+                  <select id="especie" formControlName="especie" class="form-control" required>
+                    <option value="">Seleccione...</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Ave">Ave</option>
+                    <option value="Roedor">Roedor</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="raza">Raza</label>
+                  <input type="text" id="raza" formControlName="raza" class="form-control">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                  <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" class="form-control" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="color">Color</label>
+                  <input type="text" id="color" formControlName="color" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="sexo">Sexo</label>
+                  <select id="sexo" formControlName="sexo" class="form-control" required>
+                    <option value="">Seleccione...</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" formControlName="observaciones" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-actions text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="!mascotaForm.valid">
+                  <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vista de detalles -->
+    <div *ngIf="selectedMascota && !editingMascota" class="pets-list-card">
+      <div class="list-header">
+        <h2><i class="fas fa-info-circle"></i> Detalles de {{selectedMascota.nombre}}</h2>
+        <button class="refresh-btn small" (click)="cerrarDetalles()">
+          <i class="fas fa-times"></i> Cerrar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="pet-photo-container">
+              <img *ngIf="selectedMascota.fotoUrl" [src]="selectedMascota.fotoUrl" alt="{{selectedMascota.nombre}}" class="img-fluid rounded">
+              <div *ngIf="!selectedMascota.fotoUrl" class="no-photo-large">
+                <i class="fas fa-paw fa-5x"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-warning mr-2" (click)="editarMascota(selectedMascota)">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button class="btn btn-danger" (click)="eliminarMascota(selectedMascota.id)">
+                <i class="fas fa-trash-alt"></i> Eliminar
+              </button>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-item">
+                  <h5>Nombre</h5>
+                  <p>{{selectedMascota.nombre}}</p>
+                </div>
+                <div class="detail-item">
+                  <h5>Especie</h5>
+                  <p>{{selectedMascota.especie}}</p>
+                </div>
+                <div class="detail-item">
+                  <h5>Raza</h5>
+                  <p>{{selectedMascota.raza || '--'}}</p>
+                </div>
+                <div class="detail-item">
+                  <h5>Fecha de Nacimiento</h5>
+                  <p>{{selectedMascota.fechaNacimiento | date:'dd/MM/yyyy'}}</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="detail-item">
+                  <h5>Color</h5>
+                  <p>{{selectedMascota.color}}</p>
+                </div>
+                <div class="detail-item">
+                  <h5>Sexo</h5>
+                  <p>{{selectedMascota.sexo}}</p>
+                </div>
+                <div class="detail-item">
+                  <h5>Dueño</h5>
+                  <p>{{selectedMascota.usuario?.nombre || '--'}}</p>
+                </div>
+                <div class="detail-item">
+                  <h5>Email Dueño</h5>
+                  <p>{{selectedMascota.usuario?.email || '--'}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="detail-item mt-3">
+              <h5>Observaciones</h5>
+              <p>{{selectedMascota.observaciones || 'Ninguna'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Listado de mascotas -->
-    <div class="pets-list-card">
+    <div *ngIf="!selectedMascota && !editingMascota" class="pets-list-card">
       <div class="list-header">
         <h2><i class="fas fa-list-ul"></i> Listado Completo</h2>
         <div class="actions">
@@ -115,13 +272,13 @@
               </td>
               <td>
                 <div class="action-buttons">
-                  <button class="view-btn" title="Ver detalles">
+                  <button class="view-btn" title="Ver detalles" (click)="verDetalles(mascota)">
                     <i class="fas fa-eye"></i>
                   </button>
-                  <button class="edit-btn" title="Editar">
+                  <button class="edit-btn" title="Editar" (click)="editarMascota(mascota)">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button class="delete-btn" title="Eliminar">
+                  <button class="delete-btn" title="Eliminar" (click)="eliminarMascota(mascota.id)">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </div>

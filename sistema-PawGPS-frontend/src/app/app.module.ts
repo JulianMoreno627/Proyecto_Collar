@@ -30,9 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
 import { AdminPetsComponent } from './pages/admin/admin-pets/admin-pets.component';
 import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
-import { AdminDevicesComponent } from './pages/admin/admin-devices/admin-devices.component';
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 import { MisMascotasComponent } from './pages/user/mis-mascotas/mis-mascotas.component';
+import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-tracking.component';
 
 
 
@@ -54,9 +54,9 @@ import { MisMascotasComponent } from './pages/user/mis-mascotas/mis-mascotas.com
     AdminUsersComponent,
     AdminPetsComponent,
     AdminProductsComponent,
-    AdminDevicesComponent,
     AdminOrdersComponent,
     MisMascotasComponent,
+    AdminTrackingComponent,
   ],
   imports: [
     BrowserModule,

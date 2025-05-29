@@ -1,4 +1,4 @@
-<div class="dashboard-container">
+<div class="dashboard-container"> 
   <header class="dashboard-header">
     <h1>Bienvenido, Administrador</h1>
     <p>Gestiona todos los aspectos de tu aplicación desde este panel</p>
@@ -56,7 +56,7 @@
           <line x1="12" y1="18" x2="12" y2="18"></line>
         </svg>
       </div>
-      <h3>Gestión de Dispositivos</h3>
+      <h3>Gestión de Usuarios</h3>
       <p>Administra los dispositivos de rastreo</p>
     </a>
 
@@ -72,10 +72,27 @@
       <h3>Gestión de Pedidos</h3>
       <p>Administra los pedidos realizados</p>
     </a>
+
+    <!-- Gestión de Rastreo -->
+    <a [routerLink]="['/admin/tracking']" class="dashboard-card">
+      <div class="card-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2" x2="12" y2="6"/>
+          <line x1="12" y1="18" x2="12" y2="22"/>
+          <line x1="2" y1="12" x2="6" y2="12"/>
+          <line x1="18" y1="12" x2="22" y2="12"/>
+        </svg>
+      </div>
+      <h3>Gestión de Rastreo</h3>
+      <p>Visualiza y gestiona el rastreo en tiempo real</p>
+    </a>
   </div>
 
   <div class="admin-content">
     <router-outlet></router-outlet>
   </div>
 </div>
+
 

@@ -13,4 +13,6 @@ public interface UsuarioService {
     public Usuario obtenerUsuario(String username);
 
     public void eliminarUsuario(Long usuarioId);
+    public Usuario obtenerUsuarioPorEmail(String email);
+
 }

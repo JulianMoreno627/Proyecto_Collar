@@ -386,3 +386,317 @@
     width: 100%;
   }
 }
+
+/* Estilos adicionales para el formulario de edición */
+.card-body {
+  padding: 2rem;
+  background-color: #e6dada;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Distribución y espaciado del formulario */
+.form-row {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Estilos para la vista de detalles */
+.detail-item {
+  margin-bottom: 1.2rem;
+  padding: 1rem;
+  background: #f0f9ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.detail-item:hover {
+  background: #e0f2fe;
+  transform: translateY(-2px);
+}
+
+.detail-item h5 {
+  color: #2563eb;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.detail-item p {
+  color: #0f172a;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* Área para fotos cuando no hay imagen */
+.no-photo-large {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e2e8f0;
+  border-radius: 12px;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Estilos para el área de subida de foto */
+.pet-photo-upload {
+  margin-bottom: 2rem;
+}
+
+.upload-label {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.photo-preview {
+  width: 220px;
+  height: 220px;
+  border-radius: 16px;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
+  overflow: hidden;
+  border: 3px dashed #60a5fa;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.photo-preview:hover {
+  border-color: #3b82f6;
+}
+
+.pet-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #60a5fa;
+  padding: 1rem;
+}
+
+.upload-icon i {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.upload-icon span {
+  font-size: 1rem;
+}
+
+.upload-hint {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .photo-preview {
+    width: 160px;
+    height: 160px;
+  }
+
+  .detail-item {
+    margin-bottom: 1.5rem;
+  }
+}
+.card-body {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Etiquetas y campos */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+/* Área de foto */
+.pet-photo-upload {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.photo-preview {
+  width: 220px;
+  height: 220px;
+  border-radius: 16px;
+  background-color: #3370ad;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
+  overflow: hidden;
+  border: 3px dashed #60a5fa;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.photo-preview:hover {
+  border-color: #3b82f6;
+}
+
+.upload-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #60a5fa;
+  padding: 1rem;
+}
+
+.upload-icon i {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.upload-icon span {
+  font-size: 1rem;
+}
+
+.upload-hint {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.upload-label {
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-top: 0.5rem;
+  transition: color 0.3s;
+}
+
+.upload-label:hover {
+  color: #2563eb;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Botón cancelar */
+.cancel-btn {
+  color: #214a84;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.cancel-btn:hover {
+  color: #ef4444;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .photo-preview {
+    width: 150px;
+    height: 150px;
+  }
+}
+/* Estilos generales de botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+/* Íconos dentro de botones */
+.btn i {
+  margin-right: 0.5rem;
+}
+
+/* Botón Editar */
+.btn-edit {
+  background-color: #3b82f6; /* Azul */
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+/* Botón Eliminar */
+.btn-delete {
+  background-color: #ef4444; /* Rojo */
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+/* Botón Guardar Cambios */
+.btn-save {
+  background-color: #10b981; /* Verde */
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #059669;
+  transform: scale(1.05);
+}
+
+textarea {
+  width: 100%;
+  height: 150px; /* Aumenta solo la altura */
+}
+
+

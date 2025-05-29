@@ -1,0 +1,149 @@
+/* Estilos generales */
+.container {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+h2 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h2 i {
+  color: #3498db;
+}
+
+h4 {
+  color: #34495e;
+  font-weight: 500;
+}
+
+/* Tarjetas */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.5rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Lista de dispositivos */
+.list-group-item {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.list-group-item:hover:not(.active) {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.list-group-item.active {
+  background-color: #3498db;
+  border-color: #3498db;
+  color: white;
+}
+
+/* Información de ubicación */
+.card-body p {
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-body p strong {
+  font-weight: 500;
+  min-width: 140px;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  border: none;
+  border-radius: 6px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* Mapa */
+#mapa {
+  border-radius: 0 0 10px 10px;
+}
+
+/* Tabla de historial */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom: 1px solid #dee2e6;
+  font-weight: 500;
+  color: #7f8c8d;
+  padding: 1rem;
+}
+
+.table tbody td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+/* Spinner */
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+  border-width: 0.2em;
+  color: #3498db;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-body p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  
+  .card-body p strong {
+    margin-bottom: 0.2rem;
+  }
+}

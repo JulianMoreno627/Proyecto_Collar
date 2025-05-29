@@ -1,1 +1,144 @@
+<div class="pets-container">
+  <!-- Encabezado -->
+  <div class="pets-header">
+    <h1><i class="fas fa-paw"></i> Mis Mascotas Registradas</h1>
+    <p>Aquí puedes gestionar todas tus mascotas</p>
+  </div>
 
+  <!-- Spinner de carga -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Cargando tus mascotas...</p>
+  </div>
+
+  <!-- Mensaje cuando no hay mascotas -->
+  <div *ngIf="!isLoading && mascotas.length === 0" class="no-pets-message">
+    <i class="fas fa-search"></i>
+    <h3>No tienes mascotas registradas</h3>
+    <p>Registra tu primera mascota para comenzar</p>
+    <button class="primary-button" routerLink="/registrar-mascota">
+      <i class="fas fa-plus"></i> Registrar Mascota
+    </button>
+  </div>
+
+  <!-- Formulario de edición -->
+  <div *ngIf="editingMascota" class="edit-pet-card">
+    <h2><i class="fas fa-edit"></i> Editando a {{editingMascota.nombre}}</h2>
+    
+    <div class="edit-form-container">
+      <div class="pet-photo-upload">
+        <label class="upload-label">
+          <div class="photo-preview">
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Foto de mascota" class="pet-photo">
+            <div *ngIf="!previewUrl" class="upload-icon">
+              <i class="fas fa-camera"></i>
+              <span>Cambiar foto</span>
+            </div>
+          </div>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+        </label>
+        <p class="upload-hint">Cambia la foto de tu mascota (opcional)</p>
+      </div>
+
+      <form [formGroup]="mascotaForm" (ngSubmit)="actualizarMascota()" class="pet-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" formControlName="nombre" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="especie">Especie</label>
+            <select id="especie" formControlName="especie" required>
+              <option value="">Seleccione...</option>
+              <option value="Perro">Perro</option>
+              <option value="Gato">Gato</option>
+              <option value="Ave">Ave</option>
+              <option value="Roedor">Roedor</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="raza">Raza</label>
+            <input type="text" id="raza" formControlName="raza">
+          </div>
+          
+          <div class="form-group">
+            <label for="fechaNacimiento">Fecha de Nacimiento</label>
+            <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" id="color" formControlName="color" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" formControlName="sexo" required>
+              <option value="">Seleccione...</option>
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="observaciones">Observaciones</label>
+          <textarea id="observaciones" formControlName="observaciones" rows="3"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="secondary-button" (click)="cancelarEdicion()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button type="submit" class="primary-button" [disabled]="!mascotaForm.valid">
+            <i class="fas fa-save"></i> Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Listado de mascotas -->
+  <div *ngIf="!isLoading && mascotas.length > 0 && !editingMascota" class="pets-grid">
+    <div *ngFor="let mascota of mascotas" class="pet-card">
+      <div class="pet-photo-container">
+        <img *ngIf="mascota.fotoUrl" [src]="mascota.fotoUrl" alt="{{mascota.nombre}}" class="pet-photo">
+        <div *ngIf="!mascota.fotoUrl" class="no-photo">
+          <i class="fas fa-paw"></i>
+        </div>
+      </div>
+      
+      <div class="pet-info">
+        <h3>{{mascota.nombre}}</h3>
+        <div class="pet-details">
+          <p><i class="fas fa-dog" *ngIf="mascota.especie === 'Perro'"></i>
+             <i class="fas fa-cat" *ngIf="mascota.especie === 'Gato'"></i>
+             <i class="fas fa-dove" *ngIf="mascota.especie === 'Ave'"></i>
+             <i class="fas fa-otter" *ngIf="mascota.especie === 'Roedor'"></i>
+             <i class="fas fa-paw" *ngIf="mascota.especie !== 'Perro' && mascota.especie !== 'Gato' && mascota.especie !== 'Ave' && mascota.especie !== 'Roedor'"></i>
+             {{mascota.especie}}</p>
+          <p><i class="fas fa-dna"></i> {{mascota.raza || 'Sin raza especificada'}}</p>
+          <p><i class="fas fa-birthday-cake"></i> {{calcularEdad(mascota.fechaNacimiento)}} años</p>
+          <p><i class="fas fa-palette"></i> {{mascota.color}}</p>
+          <p><i class="fas fa-venus-mars"></i> {{mascota.sexo}}</p>
+        </div>
+        
+        <div class="pet-actions">
+          <button class="edit-button" (click)="editarMascota(mascota)">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+          <button class="delete-button" (click)="eliminarMascota(mascota.id)">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

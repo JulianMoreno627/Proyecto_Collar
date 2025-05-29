@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -13,27 +7,73 @@ interface User {
   styleUrls: ['./admin-users.component.css']
 })
 export class AdminUsersComponent implements OnInit {
-  users: User[] = [];
+  usuarios: any[] = [];
+  totalUsuarios: number = 0;
+  isLoading: boolean = true;
+  errorMessage: string | null = null;
+  selectedUsuario: any = null;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    // Datos simulados
-    this.users = [
-      { id: 1, name: 'Juan Pérez', email: 'juan@example.com', role: 'Usuario' },
-      { id: 2, name: 'Ana Gómez', email: 'ana@example.com', role: 'Administrador' },
-      { id: 3, name: 'Carlos Ruiz', email: 'carlos@example.com', role: 'Usuario' }
-    ];
+    this.cargarDatos();
   }
 
-  viewUser(user: User) {
-    alert(`Ver usuario: ${user.name}`);
+  cargarDatos(): void {
+    this.isLoading = true;
+    this.errorMessage = null;
+    
+    this.userService.obtenerTodosUsuarios().subscribe(
+      (data: any) => {
+        this.usuarios = data;
+        this.cargarTotalUsuarios();
+      },
+      error => {
+        console.error('Error al cargar usuarios:', error);
+        this.errorMessage = 'Error al cargar la lista de usuarios';
+        this.isLoading = false;
+      }
+    );
   }
 
-  editUser(user: User) {
-    alert(`Editar usuario: ${user.name}`);
+  cargarTotalUsuarios(): void {
+    this.userService.contarUsuarios().subscribe(
+      (total: number) => {
+        this.totalUsuarios = total;
+        this.isLoading = false;
+      },
+      error => {
+        console.error('Error al contar usuarios:', error);
+        this.errorMessage = 'Error al cargar el total de usuarios';
+        this.isLoading = false;
+      }
+    );
   }
 
-  deleteUser(id: number) {
-    this.users = this.users.filter(user => user.id !== id);
+  verDetalles(usuario: any): void {
+    this.selectedUsuario = usuario;
+  }
+
+  eliminarUsuario(id: number): void {
+    if (confirm('¿Estás seguro de eliminar este usuario? Esta acción es permanente y no podrá volver a ingresar.')) {
+      this.userService.eliminarUsuario(id).subscribe(
+        () => {
+          this.cargarDatos();
+          this.selectedUsuario = null;
+        },
+        error => {
+          console.error('Error al eliminar usuario:', error);
+          alert('Error al eliminar usuario');
+        }
+      );
+    }
+  }
+
+  cerrarDetalles(): void {
+    this.selectedUsuario = null;
+  }
+
+  refrescar(): void {
+    this.cargarDatos();
   }
 }
-

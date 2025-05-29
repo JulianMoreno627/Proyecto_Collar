@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MascotaService } from 'src/app/services/mascota.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-pets',
@@ -13,11 +14,26 @@ export class AdminPetsComponent implements OnInit {
   isLoading: boolean = true;
   errorMessage: string | null = null;
   selectedMascota: any = null;
+  editingMascota: any = null;
+  mascotaForm: FormGroup;
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private mascotaService: MascotaService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.mascotaForm = this.fb.group({
+      nombre: ['', Validators.required],
+      especie: ['', Validators.required],
+      raza: [''],
+      fechaNacimiento: ['', Validators.required],
+      color: ['', Validators.required],
+      sexo: ['', Validators.required],
+      observaciones: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.cargarDatos();
@@ -54,8 +70,61 @@ export class AdminPetsComponent implements OnInit {
     );
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   verDetalles(mascota: any): void {
     this.selectedMascota = mascota;
+    this.editingMascota = null;
+  }
+
+  editarMascota(mascota: any): void {
+    this.editingMascota = mascota;
+    this.selectedMascota = null;
+    this.mascotaForm.patchValue({
+      nombre: mascota.nombre,
+      especie: mascota.especie,
+      raza: mascota.raza,
+      fechaNacimiento: mascota.fechaNacimiento.split('T')[0],
+      color: mascota.color,
+      sexo: mascota.sexo,
+      observaciones: mascota.observaciones
+    });
+    this.previewUrl = mascota.fotoUrl || null;
+  }
+
+  actualizarMascota(): void {
+    if (this.mascotaForm.valid) {
+      const formData = new FormData();
+      const mascotaData = this.mascotaForm.value;
+      
+      formData.append('mascota', JSON.stringify(mascotaData));
+      
+      if (this.selectedFile) {
+        formData.append('foto', this.selectedFile);
+      }
+
+      this.mascotaService.actualizarMascota(this.editingMascota.id, formData).subscribe(
+        (response: any) => {
+          alert('Mascota actualizada con éxito');
+          this.cancelarEdicion();
+          this.cargarDatos();
+        },
+        error => {
+          console.error('Error al actualizar mascota:', error);
+          alert('Error al actualizar mascota');
+        }
+      );
+    }
   }
 
   eliminarMascota(id: number): void {
@@ -63,6 +132,8 @@ export class AdminPetsComponent implements OnInit {
       this.mascotaService.eliminarMascota(id).subscribe(
         () => {
           this.cargarDatos();
+          this.selectedMascota = null;
+          this.editingMascota = null;
         },
         error => {
           console.error('Error al eliminar mascota:', error);
@@ -72,14 +143,18 @@ export class AdminPetsComponent implements OnInit {
     }
   }
 
+  cancelarEdicion(): void {
+    this.editingMascota = null;
+    this.mascotaForm.reset();
+    this.previewUrl = null;
+    this.selectedFile = null;
+  }
+
   cerrarDetalles(): void {
     this.selectedMascota = null;
   }
 
-  // Método agregado para refrescar los datos al hacer click en los botones de refrescar
   refrescar(): void {
     this.cargarDatos();
   }
 }
-
-
