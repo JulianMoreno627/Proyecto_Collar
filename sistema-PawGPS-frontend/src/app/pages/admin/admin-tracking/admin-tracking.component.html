@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <h2><i class="fas fa-map-marked-alt"></i> Rastreo GPS - Administrador</h2>
+  
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h4>Dispositivos</h4>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isLoading" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+          </div>
+          
+          <div *ngIf="!isLoading">
+            <div class="list-group">
+              <button *ngFor="let dispositivo of dispositivos" 
+                      class="list-group-item list-group-item-action"
+                      [class.active]="dispositivoSeleccionado?.id === dispositivo.id"
+                      (click)="seleccionarDispositivo(dispositivo)">
+                {{dispositivo.nombre}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="dispositivoSeleccionado" class="card mt-3">
+        <div class="card-header">
+          <h4>Información de Ubicación</h4>
+        </div>
+        <div class="card-body">
+          <div *ngIf="ubicacionActual">
+            <p><strong>Última actualización:</strong> {{ubicacionActual.fechaHora | date:'medium'}}</p>
+            <p><strong>Latitud:</strong> {{ubicacionActual.latitud}}</p>
+            <p><strong>Longitud:</strong> {{ubicacionActual.longitud}}</p>
+            <button class="btn btn-primary btn-sm" (click)="actualizarUbicacion()">
+              <i class="fas fa-sync-alt"></i> Actualizar
+            </button>
+          </div>
+          <div *ngIf="!ubicacionActual">
+            <p>No hay datos de ubicación disponibles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>Mapa de Ubicación</h4>
+        </div>
+        <div class="card-body p-0">
+          <div id="mapa" style="height: 500px; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="dispositivoSeleccionado" class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Historial de Ubicaciones</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha y Hora</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ubicacion of historialUbicaciones">
+                <td>{{ubicacion.fechaHora | date:'medium'}}</td>
+                <td>{{ubicacion.latitud}}</td>
+                <td>{{ubicacion.longitud}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

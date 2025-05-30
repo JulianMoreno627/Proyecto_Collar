@@ -1,0 +1,71 @@
+<div class="tracker-container">
+  <h2>Sistema de Rastreo de Collares</h2>
+  
+  <div class="collar-options">
+    <!-- Collar 1 -->
+    <div class="collar-card">
+      <div class="collar-icon collar1">
+        <i class="fas fa-dog"></i>
+      </div>
+      <h3>Collar 1</h3>
+      
+      <div class="collar-actions">
+        <!-- Botón para abrir el monitor en PC -->
+        <button class="btn-monitor" (click)="openTrackerMonitor('collar1')">
+          <i class="fas fa-map"></i> Monitorear en Mapa
+        </button>
+        
+        <!-- Enlace para el dispositivo móvil -->
+        <div class="collar-link">
+          <label>Enlace para dispositivo móvil:</label>
+          <a [href]="generateCollarLink('collar1')" target="_blank">{{ generateCollarLink('collar1') }}</a>
+          <button (click)="copyToClipboard(generateCollarLink('collar1'))">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Collar 2 -->
+    <div class="collar-card">
+      <div class="collar-icon collar2">
+        <i class="fas fa-dog"></i>
+      </div>
+      <h3>Collar 2</h3>
+      
+      <div class="collar-actions">
+        <button class="btn-monitor" (click)="openTrackerMonitor('collar2')">
+          <i class="fas fa-map"></i> Monitorear en Mapa
+        </button>
+        
+        <div class="collar-link">
+          <label>Enlace para dispositivo móvil:</label>
+          <a [href]="generateCollarLink('collar2')" target="_blank">{{ generateCollarLink('collar2') }}</a>
+          <button (click)="copyToClipboard(generateCollarLink('collar2'))">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="server-info">
+    <!-- Cambio aquí: usa TRACKER_SERVER_URL en lugar de las propiedades separadas -->
+    <p><strong>Servidor de Rastreo:</strong> {{ TRACKER_SERVER_URL }}</p>
+    <p class="hint">Asegúrate que el servidor esté en ejecución</p>
+  </div>
+
+  <div class="instructions">
+    <h4><i class="fas fa-info-circle"></i> Instrucciones de uso:</h4>
+    <ol>
+      <li>Para rastrear una mascota:
+        <ul>
+          <li><strong>Dispositivo móvil:</strong> Usa el enlace del collar correspondiente</li>
+          <li><strong>Computadora:</strong> Haz clic en "Monitorear en Mapa"</li>
+        </ul>
+      </li>
+      <li>Permite el acceso a ubicación en el dispositivo móvil</li>
+      <li>La posición se actualizará automáticamente en el mapa de la computadora</li>
+    </ol>
+  </div>
+</div>

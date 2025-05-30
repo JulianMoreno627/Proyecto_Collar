@@ -1,211 +1,29 @@
-<div class="admin-users-container">
-  <!-- Header con efecto de gradiente -->
-  <div class="admin-header">
-    <div class="header-content">
-      <h1 class="admin-title">
-        <i class="fas fa-users-cog"></i> Gestión de Usuarios
-      </h1>
-      <p class="admin-subtitle">Administra todos los usuarios registrados en el sistema</p>
-    </div>
-    <div class="header-actions">
-      <button class="refresh-btn" (click)="refrescar()">
-        <i class="fas fa-sync-alt"></i> Actualizar
-      </button>
-    </div>
-  </div>
+<div class="container">
+  <h2>Gestión de Usuarios</h2>
 
-  <!-- Mensajes de error mejorados -->
-  <div *ngIf="errorMessage" class="error-alert">
-    <div class="alert-icon">
-      <i class="fas fa-exclamation-triangle"></i>
-    </div>
-    <div class="alert-message">
-      <h4>Ocurrió un error</h4>
-      <p>{{errorMessage}}</p>
-    </div>
-    <button class="alert-action" (click)="refrescar()">
-      <i class="fas fa-redo"></i>
-    </button>
-  </div>
-  
-  <!-- Spinner de carga más moderno -->
-  <div *ngIf="isLoading" class="loading-container">
-    <div class="spinner-container">
-      <div class="spinner-circle"></div>
-      <div class="spinner-text">Cargando usuarios...</div>
-    </div>
-  </div>
-  
-  <!-- Contenido principal -->
-  <div *ngIf="!isLoading">
-    <!-- Tarjeta de resumen con iconos -->
-    <div class="summary-card">
-      <div class="summary-header">
-        <div class="summary-title">
-          <i class="fas fa-chart-line"></i>
-          <h2>Resumen de Usuarios</h2>
-        </div>
-        <div class="summary-actions">
-          <button class="refresh-btn small" (click)="refrescar()" title="Actualizar datos">
-            <i class="fas fa-sync"></i>
-          </button>
-        </div>
-      </div>
-      <div class="summary-body">
-        <div class="summary-item total-users">
-          <div class="summary-icon">
-            <i class="fas fa-user-friends"></i>
-          </div>
-          <div class="summary-info">
-            <h3>Usuarios Registrados</h3>
-            <p class="summary-count">{{totalUsuarios}}</p>
-            <span class="summary-label">en total</span>
-          </div>
-        </div>
-        <div class="summary-item shown-users">
-          <div class="summary-icon">
-            <i class="fas fa-list-ol"></i>
-          </div>
-          <div class="summary-info">
-            <h3>Mostrados</h3>
-            <p class="summary-count">{{usuarios.length}}</p>
-            <span class="summary-label">en esta vista</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Vista de detalles con tarjeta elegante -->
-    <div *ngIf="selectedUsuario" class="user-details-card">
-      <div class="details-header">
-        <div class="user-avatar">
-          <i class="fas fa-user-circle"></i>
-        </div>
-        <div class="user-title">
-          <h2>{{selectedUsuario.nombre}} {{selectedUsuario.apellido}}</h2>
-          <p class="user-email">{{selectedUsuario.email}}</p>
-        </div>
-        <button class="close-btn" (click)="cerrarDetalles()" title="Cerrar detalles">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="details-body">
-        <div class="details-section">
-          <h3 class="section-title"><i class="fas fa-id-card"></i> Información Personal</h3>
-          <div class="detail-grid">
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="fas fa-signature"></i> Nombre
-              </div>
-              <div class="detail-value">{{selectedUsuario.nombre}}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="fas fa-signature"></i> Apellido
-              </div>
-              <div class="detail-value">{{selectedUsuario.apellido || 'No especificado'}}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="fas fa-at"></i> Email
-              </div>
-              <div class="detail-value">{{selectedUsuario.email}}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="fas fa-mobile-alt"></i> Teléfono
-              </div>
-              <div class="detail-value">{{selectedUsuario.telefono || 'No especificado'}}</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="details-section">
-          <h3 class="section-title"><i class="fas fa-user-tag"></i> Datos de Cuenta</h3>
-          <div class="detail-grid">
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="fas fa-user"></i> Nombre de usuario
-              </div>
-              <div class="detail-value">{{selectedUsuario.username || 'No especificado'}}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="fas fa-calendar-alt"></i> Fecha de registro
-              </div>
-              <div class="detail-value">{{selectedUsuario.fechaRegistro | date:'dd/MM/yyyy'}}</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="details-actions">
-          <button class="delete-btn" (click)="eliminarUsuario(selectedUsuario.id)">
-            <i class="fas fa-user-slash"></i> Eliminar Usuario Permanentemente
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Listado de usuarios con tabla mejorada -->
-    <div *ngIf="!selectedUsuario" class="users-list-card">
-      <div class="list-header">
-        <div class="list-title">
-          <i class="fas fa-list-ul"></i>
-          <h2>Listado de Usuarios</h2>
-        </div>
-        <div class="list-actions">
-          <button class="refresh-btn small" (click)="refrescar()" title="Actualizar lista">
-            <i class="fas fa-sync-alt"></i>
-          </button>
-        </div>
-      </div>
-      
-      <div *ngIf="usuarios.length === 0" class="empty-state">
-        <div class="empty-icon">
-          <i class="fas fa-user-times"></i>
-        </div>
-        <h3>No hay usuarios registrados</h3>
-        <p>Actualmente no hay usuarios en el sistema.</p>
-      </div>
-      
-      <div *ngIf="usuarios.length > 0" class="users-table-container">
-        <table class="users-table">
-          <thead>
-            <tr>
-              <th><i class="fas fa-user"></i> Usuario</th>
-              <th><i class="fas fa-envelope"></i> Email</th>
-              <th><i class="fas fa-calendar"></i> Registro</th>
-              <th><i class="fas fa-cog"></i> Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let usuario of usuarios">
-              <td class="user-cell">
-                <div class="user-avatar small">
-                  <i class="fas fa-user-circle"></i>
-                </div>
-                <div class="user-info">
-                  <div class="user-name">{{usuario.nombre}} {{usuario.apellido}}</div>
-                  <div class="user-username">@{{usuario.username || 'sin_usuario'}}</div>
-                </div>
-              </td>
-              <td class="email-cell">{{usuario.email}}</td>
-              <td class="date-cell">{{usuario.fechaRegistro | date:'dd/MM/yyyy'}}</td>
-              <td class="actions-cell">
-                <div class="action-buttons">
-                  <button class="view-btn" (click)="verDetalles(usuario)" title="Ver detalles">
-                    <i class="fas fa-eye"></i> Detalles
-                  </button>
-                  <button class="delete-btn" (click)="eliminarUsuario(usuario.id)" title="Eliminar usuario">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo electrónico</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button (click)="viewUser(user)">Ver</button>
+          <button (click)="editUser(user)">Editar</button>
+          <button (click)="deleteUser(user.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+

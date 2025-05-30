@@ -24,31 +24,19 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { CarritoComponent } from './pages/user/carrito/carrito.component';
 import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
-import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
+import { ProductosComponent } from './pages/user/productos/productos.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
 import { AdminPetsComponent } from './pages/admin/admin-pets/admin-pets.component';
 import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
+import { AdminDevicesComponent } from './pages/admin/admin-devices/admin-devices.component';
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 import { MisMascotasComponent } from './pages/user/mis-mascotas/mis-mascotas.component';
 import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-tracking.component';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { TagModule } from 'primeng/tag';
-import { CartComponent } from './pages/user/cart/cart.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { ProductDetailModalComponent } from './components/product-detail-modal/product-detail-modal.component';
+import { MisDispositivosComponent } from './pages/user/mis-dispositivos/mis-dispositivos.component';
+import { TrackerComponent } from './pages/user/tracker/tracker.component';
 
-import { MatSelectModule } from '@angular/material/select';
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-import { MatMenuModule } from '@angular/material/menu';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -62,16 +50,16 @@ import { MatDividerModule } from '@angular/material/divider';
     UserDashboardComponent,
     CarritoComponent,
     MiMascotaComponent,
-    RastreoComponent,
+    ProductosComponent,
     AdminUsersComponent,
     AdminPetsComponent,
     AdminProductsComponent,
+    AdminDevicesComponent,
     AdminOrdersComponent,
     MisMascotasComponent,
     AdminTrackingComponent,
-    CartComponent,
-    ProductListComponent,
-    ProductDetailModalComponent,
+    MisDispositivosComponent,
+    TrackerComponent
   ],
   imports: [
     BrowserModule,
@@ -86,19 +74,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    ReactiveFormsModule,
-    ToastModule,
-    ConfirmDialogModule,
-    TableModule,
-    ButtonModule,
-    DialogModule,
-    TagModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatMenuModule,
-    MatBadgeModule ,
-    MatDividerModule,
-
+    ReactiveFormsModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

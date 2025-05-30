@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import  Swal  from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
-import { UserService } from '../../services/user.service';
-import { Usuario } from '../../components/models/usuario.model';
+import { UserService } from './../../services/user.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-signup',
@@ -12,75 +9,43 @@ import { Usuario } from '../../components/models/usuario.model';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  registroForm: FormGroup;
-  hidePassword = true;
-  isLoading = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private snack: MatSnackBar,
-    private router: Router
-  ) {
-    this.registroForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.pattern('^[0-9]{10}$')]]
-    });
+  public user = {
+    username : '',
+    password : '',
+    nombre : '',
+    apellido : '',
+    email : '',
+    telefono : ''
   }
 
-  ngOnInit(): void {}
+  constructor(private userService:UserService,private snack:MatSnackBar) { }
 
-  get f() {
-    return this.registroForm.controls;
+  ngOnInit(): void {
   }
 
-  formSubmit(): void {
-    if (this.registroForm.invalid) {
-      this.mostrarError('Por favor complete todos los campos requeridos correctamente');
+  formSubmit(){
+    console.log(this.user);
+    if(this.user.username == '' || this.user.username == null){
+      this.snack.open('El nombre de usuario es requerido !!','Aceptar',{
+        duration : 3000,
+        verticalPosition : 'top',
+        horizontalPosition : 'right'
+      });
       return;
     }
 
-    this.isLoading = true;
-    const usuario: Usuario = this.registroForm.value;
-
-    this.userService.añadirUsuario(usuario).subscribe({
-      next: (data) => {
-        this.isLoading = false;
-        Swal.fire({
-          title: 'Registro exitoso',
-          text: 'Usuario registrado con éxito en el sistema',
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        }).then(() => {
-          this.router.navigate(['/login']);
+    this.userService.añadirUsuario(this.user).subscribe(
+      (data) => {
+        console.log(data);
+        Swal.fire('Usuario guardado','Usuario registrado con exito en el sistema','success');
+      },(error) => {
+        console.log(error);
+        this.snack.open('Ha ocurrido un error en el sistema !!','Aceptar',{
+          duration : 3000
         });
-      },
-      error: (error) => {
-        this.isLoading = false;
-        console.error('Error en registro:', error);
-        let errorMsg = 'Ha ocurrido un error en el sistema';
-        
-        if (error.error && error.error.message) {
-          errorMsg = error.error.message;
-        } else if (error.status === 409) {
-          errorMsg = 'El nombre de usuario o email ya existe';
-        }
-
-        this.mostrarError(errorMsg);
       }
-    });
+    )
   }
 
-  private mostrarError(mensaje: string): void {
-    this.snack.open(mensaje, 'Cerrar', {
-      duration: 5000,
-      panelClass: ['error-snackbar'],
-      verticalPosition: 'top',
-      horizontalPosition: 'right'
-    });
-  }
 }

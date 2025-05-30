@@ -7,15 +7,17 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProductosComponent } from './pages/user/productos/productos.component';
 import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
-import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
 import { CarritoComponent } from './pages/user/carrito/carrito.component';
 import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
 import { AdminPetsComponent } from './pages/admin/admin-pets/admin-pets.component';
 import { AdminProductsComponent } from './pages/admin/admin-products/admin-products.component';
+import { AdminDevicesComponent } from './pages/admin/admin-devices/admin-devices.component';
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 import { MisMascotasComponent } from './pages/user/mis-mascotas/mis-mascotas.component';
 import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-tracking.component';
+import { TrackerComponent } from './pages/user/tracker/tracker.component';
 
 const routes: Routes = [
   {
@@ -33,7 +35,7 @@ const routes: Routes = [
     component: LoginComponent,
     pathMatch: 'full'
   },
-   {
+  {
     path: 'user-dashboard',
     component: UserDashboardComponent,
     canActivate: [NormalGuard]
@@ -48,37 +50,24 @@ const routes: Routes = [
     component: MisMascotasComponent,
     canActivate: [NormalGuard]
   },
+
   {
-    path: 'rastreo',
-    component: RastreoComponent,
-    canActivate: [NormalGuard]
-  },
-  {
-    path: 'carrito',
-    component: CarritoComponent,
+    path: 'tracker',
+    component: TrackerComponent,
     canActivate: [NormalGuard]
   },
   {
     path: 'admin',
     component: DashboardComponent,
     canActivate: [AdminGuard],
-      children:[
+    children: [
       {
-        path: 'users',
-        component: AdminUsersComponent,
+        path: 'pets',
+        component: AdminPetsComponent
       },
-      {
-        path:'pets',
-        component: AdminPetsComponent ,
-      },
-      {
-        path:'tracking',
-        component: AdminTrackingComponent ,
-      }
+     
     ]
-
-  },
- 
+  }
 ];
 
 @NgModule({

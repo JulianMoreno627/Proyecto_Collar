@@ -1,7 +1,8 @@
 package com.sistema.pawgps.modelo;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "dispositivos")
@@ -10,13 +11,16 @@ public class Dispositivo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modelo;
-    private String sistemaOperativo;
-    private Date fechaRegistro;
+    private String nombre;
+    private String codigoUnico;
+    private boolean activo;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "dispositivo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ubicacion> ubicaciones = new HashSet<>();
 
     // Getters y Setters
     public Long getId() {
@@ -27,28 +31,28 @@ public class Dispositivo {
         this.id = id;
     }
 
-    public String getModelo() {
-        return modelo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getSistemaOperativo() {
-        return sistemaOperativo;
+    public String getCodigoUnico() {
+        return codigoUnico;
     }
 
-    public void setSistemaOperativo(String sistemaOperativo) {
-        this.sistemaOperativo = sistemaOperativo;
+    public void setCodigoUnico(String codigoUnico) {
+        this.codigoUnico = codigoUnico;
     }
 
-    public Date getFechaRegistro() {
-        return fechaRegistro;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Usuario getUsuario() {
@@ -57,5 +61,13 @@ public class Dispositivo {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Set<Ubicacion> getUbicaciones() {
+        return ubicaciones;
+    }
+
+    public void setUbicaciones(Set<Ubicacion> ubicaciones) {
+        this.ubicaciones = ubicaciones;
     }
 }
