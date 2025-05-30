@@ -7,7 +7,6 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductosComponent } from './pages/user/productos/productos.component';
 import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
 import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
 import { CarritoComponent } from './pages/user/carrito/carrito.component';
@@ -37,11 +36,6 @@ const routes: Routes = [
    {
     path: 'user-dashboard',
     component: UserDashboardComponent,
-    canActivate: [NormalGuard]
-  },
-  {
-    path: 'productos',
-    component: ProductosComponent,
     canActivate: [NormalGuard]
   },
   {

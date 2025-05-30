@@ -24,7 +24,6 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { CarritoComponent } from './pages/user/carrito/carrito.component';
 import { MiMascotaComponent } from './pages/user/mi-mascota/mi-mascota.component';
-import { ProductosComponent } from './pages/user/productos/productos.component';
 import { RastreoComponent } from './pages/user/rastreo/rastreo.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
@@ -33,9 +32,23 @@ import { AdminProductsComponent } from './pages/admin/admin-products/admin-produ
 import { AdminOrdersComponent } from './pages/admin/admin-orders/admin-orders.component';
 import { MisMascotasComponent } from './pages/user/mis-mascotas/mis-mascotas.component';
 import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-tracking.component';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { TagModule } from 'primeng/tag';
+import { CartComponent } from './pages/user/cart/cart.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductDetailModalComponent } from './components/product-detail-modal/product-detail-modal.component';
 
+import { MatSelectModule } from '@angular/material/select';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -49,7 +62,6 @@ import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-track
     UserDashboardComponent,
     CarritoComponent,
     MiMascotaComponent,
-    ProductosComponent,
     RastreoComponent,
     AdminUsersComponent,
     AdminPetsComponent,
@@ -57,6 +69,9 @@ import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-track
     AdminOrdersComponent,
     MisMascotasComponent,
     AdminTrackingComponent,
+    CartComponent,
+    ProductListComponent,
+    ProductDetailModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +86,19 @@ import { AdminTrackingComponent } from './pages/admin/admin-tracking/admin-track
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule,
+    ConfirmDialogModule,
+    TableModule,
+    ButtonModule,
+    DialogModule,
+    TagModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatBadgeModule ,
+    MatDividerModule,
+
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import com.sistema.pawgps.servicios.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -21,19 +22,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario guardarUsuario(Usuario usuario, Set<UsuarioRol> usuarioRoles) throws Exception {
-        Usuario usuarioLocal = usuarioRepository.findByUsername(usuario.getUsername());
-        if(usuarioLocal != null){
-            System.out.println("El usuario ya existe");
-            throw new Exception("El usuario ya esta presente");
+        Usuario usuarioExistente = usuarioRepository.findByUsername(usuario.getUsername());
+        if (usuarioExistente != null) {
+            throw new Exception("El usuario ya está registrado");
         }
-        else{
-            for(UsuarioRol usuarioRol:usuarioRoles){
-                rolRepository.save(usuarioRol.getRol());
-            }
-            usuario.getUsuarioRoles().addAll(usuarioRoles);
-            usuarioLocal = usuarioRepository.save(usuario);
+
+        // Guardar roles asociados
+        for (UsuarioRol usuarioRol : usuarioRoles) {
+            rolRepository.save(usuarioRol.getRol());
         }
-        return usuarioLocal;
+
+        usuario.getUsuarioRoles().addAll(usuarioRoles);
+        return usuarioRepository.save(usuario);
     }
 
     @Override
@@ -42,13 +42,65 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario obtenerUsuarioPorId(Long usuarioId) {
+        return usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
+    }
+
+    @Override
     public void eliminarUsuario(Long usuarioId) {
         usuarioRepository.deleteById(usuarioId);
     }
 
-    // NUEVO MÉTODO
     @Override
     public Usuario obtenerUsuarioPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Usuario> obtenerTodosUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    @Override
+    public Usuario actualizarUsuario(Usuario usuario, Set<UsuarioRol> usuarioRoles) {
+        // Verificar si el usuario existe
+        Usuario usuarioExistente = usuarioRepository.findById(usuario.getId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Actualizar roles
+        usuarioExistente.getUsuarioRoles().clear();
+        for (UsuarioRol usuarioRol : usuarioRoles) {
+            rolRepository.save(usuarioRol.getRol());
+            usuarioExistente.getUsuarioRoles().add(usuarioRol);
+        }
+
+        // Actualizar datos básicos
+        usuarioExistente.setUsername(usuario.getUsername());
+        usuarioExistente.setPassword(usuario.getPassword());
+        usuarioExistente.setNombre(usuario.getNombre());
+        usuarioExistente.setApellido(usuario.getApellido());
+        usuarioExistente.setEmail(usuario.getEmail());
+        usuarioExistente.setTelefono(usuario.getTelefono());
+        usuarioExistente.setPerfil(usuario.getPerfil());
+        usuarioExistente.setEnabled(usuario.isEnabled());
+
+        return usuarioRepository.save(usuarioExistente);
+    }
+
+    @Override
+    public Usuario actualizarRolesUsuario(Long usuarioId, Set<UsuarioRol> nuevosRoles) {
+        Usuario usuario = obtenerUsuarioPorId(usuarioId);
+
+        // Eliminar roles existentes
+        usuario.getUsuarioRoles().clear();
+
+        // Añadir nuevos roles
+        for (UsuarioRol usuarioRol : nuevosRoles) {
+            rolRepository.save(usuarioRol.getRol());
+            usuario.getUsuarioRoles().add(usuarioRol);
+        }
+
+        return usuarioRepository.save(usuario);
     }
 }
